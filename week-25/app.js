@@ -43,15 +43,17 @@
 // });
 
 
+// const bodyParser = require("body-parser");
 const express = require("express");
-
 const fs = require("fs");
 
 const app = express();
 
+// app.use(express.static('public'))
+
 const port = 3000;
-
-
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json())
 
 // app.METHOD(PATH, HANDLER)
 
@@ -100,12 +102,34 @@ const port = 3000;
 //     res.send(req.params.name)
 // });
 
+// npm install body-parser --save
 
-app.post('/display', function(req, res) {
-    console.log(req.body);
-    res.send(req.body);
-})
+const bodyParser = require('body-parser');
+const { application } = require("express");
+
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+
+// app.use(express.json())
 
 
+// var myLogger = function(req, res, next) {
+//     console.log("Logged.")
+//     next();
+// }
+
+// app.use('/display', myLogger);
+
+// app.post('/display', function(req, res) {
+//     console.log(req.body);
+//     res.send(req.body);
+// });
+
+// app.post('/displayTest', function(req, res) {
+//     console.log(req.body);
+//     res.send(req.body);
+// });
+
+app.use(express.static('public'));
 
 app.listen(port, () => console.log("The server is up at: ", port));

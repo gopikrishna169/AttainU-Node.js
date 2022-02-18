@@ -130,6 +130,40 @@ app.use(bodyParser.json())
 //     res.send(req.body);
 // });
 
-app.use(express.static('public'));
+// app.use('/static',express.static('public'));
+
+let data = require('./users.json');
+
+app.get('/users', (req, res) => {
+    res.send(data.users)
+});
+
+app.get('/filter', (req, res) => {
+
+    let userName = req.query.username;
+    let filteredList = data.users.filter((val) => val.name === userName);
+
+    res.send(filteredList);
+
+});
+
+app.post('/user', (req, res) => {
+    let user = req.body;
+    let newData = data
+    newData.users.push(user);
+    fs.writeFileSync('users.json', JSON.stringify(data))
+    console.log("data", data);
+    console.log("newData", data);
+    res.send("The new user was added.")
+})
 
 app.listen(port, () => console.log("The server is up at: ", port));
+
+
+
+// http://localhost:3000/images/test.jpeg --> file is present
+
+// http://localhost:3000/static/images/test.jpeg --> file is not present
+
+
+// locahost:3000/userDelete?username=xyz
